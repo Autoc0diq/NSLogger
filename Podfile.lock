@@ -1,0 +1,10 @@
+PODS:
+  - NSLogger/NoStrip (1.5.1)
+
+DEPENDENCIES:
+  - NSLogger/NoStrip
+
+SPEC CHECKSUMS:
+  NSLogger: 5ed223a2436df96244e033be750656dacdeec034
+
+COCOAPODS: 0.39.0
