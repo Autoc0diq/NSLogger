@@ -1160,6 +1160,9 @@ static void LoggerStopConsoleRedirection()
 	close(sSTDOUT);
 	close(sSTDERR);
 
+	sSTDOUT = -1;
+	sSTDERR = -1;
+    
 	// restore sigpipe flag on standard streams
 	fcntl(STDOUT_FILENO, F_SETNOSIGPIPE, &sSTDOUThadSIGPIPE);
 	fcntl(STDERR_FILENO, F_SETNOSIGPIPE, &sSTDERRhadSIGPIPE);
@@ -1539,7 +1542,7 @@ static void LoggerServiceBrowserCallBack (CFNetServiceBrowserRef browser,
 					CFStringRef name = CFNetServiceGetName(service);
 					if (name == NULL || kCFCompareEqualTo != CFStringCompare(name, logger->bonjourServiceName, kCFCompareCaseInsensitive | kCFCompareDiacriticInsensitive))
 					{
-						LOGGERDBG(CFSTR("-> service name %@ does not match requested service name, ignoring."), name, logger->bonjourServiceName);
+						LOGGERDBG(CFSTR("-> service name %@ does not match requested service name, ignoring."), name);
 						return;
 					}
 				}
@@ -1563,7 +1566,7 @@ static void LoggerServiceBrowserCallBack (CFNetServiceBrowserRef browser,
 							CFRelease(txtDict);
 							if (mismatch)
 							{
-								LOGGERDBG(CFSTR("-> service %@ requested that only clients looking for it do connect."), name, logger->bonjourServiceName);
+								LOGGERDBG(CFSTR("-> service %@ requested that only clients looking for it do connect."), CFNetServiceGetName(service));
 								return;
 							}
 						}
@@ -1630,7 +1633,7 @@ static void LoggerStartReachabilityChecking(Logger *logger)
 		else
 		{
 			// reachability for generic connection to the internet
-			LOGGERDBG(CFSTR("Starting SCNetworkReachability to wait for internet to be reachable"), logger->host);
+			LOGGERDBG(CFSTR("Starting SCNetworkReachability to wait for internet to be reachable"));
 			struct sockaddr_in addr;
 			bzero(&addr, sizeof(addr));
 			addr.sin_len = (__uint8_t) sizeof(addr);

@@ -2,7 +2,7 @@ platform :ios, '9.0'
 
 plugin 'cocoapods-rome'
 
-pod "NSLogger/NoStrip"
+pod "NSLogger/NoStrip", :git => "https://github.com/fpillet/NSLogger.git", :commit => "c20af3052b"
 
 use_frameworks!
 
